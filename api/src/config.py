@@ -9,7 +9,9 @@ class Settings(BaseSettings):
     pg_primary_connection_string: str = ""
     pg_read_replicas_connection_string: list[str] = []
     pool_min : int = 2
-    pool_max : int = 10
+    pool_max : int = 20          
+    pool_timeout : float = 2.0   
+    pool_max_waiting : int = 100 
 
     @field_validator("pg_read_replicas_connection_string", mode="before")
     @classmethod
