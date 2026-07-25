@@ -74,3 +74,47 @@ THRESHOLDS
 
 running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
 reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s
+
+
+ scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 3000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✗ 'rate<0.01' rate=17.97%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 89986  2987.916116/s
+    checks_succeeded...: 82.02% 73814 out of 89986
+    checks_failed......: 17.97% 16172 out of 89986
+
+    ✗ is 302
+      ↳  82% — ✓ 73814 / ✗ 16172
+
+    HTTP
+    http_req_duration..............: min=656µs    med=24.44ms avg=77.68ms p(90)=170.82ms p(95)=286.81ms p(99)=690.52ms p(99.9)=1.06s max=1.29s
+      { expected_response:true }...: min=1.97ms   med=36.09ms avg=89.36ms p(90)=192.63ms p(95)=350.42ms p(99)=741.46ms p(99.9)=1.08s max=1.29s
+    http_req_failed................: 17.97% 16172 out of 89986
+    http_reqs......................: 89986  2987.916116/s
+
+    EXECUTION
+    dropped_iterations.............: 15     0.498063/s
+    iteration_duration.............: min=689.87µs med=24.51ms avg=77.81ms p(90)=171.28ms p(95)=287.55ms p(99)=690.56ms p(99.9)=1.06s max=1.29s
+    iterations.....................: 89986  2987.916116/s
+    vus............................: 296    min=19             max=910 
+    vus_max........................: 1002   min=1000           max=1002
+
+    NETWORK
+    data_received..................: 16 MB  531 kB/s
+    data_sent......................: 6.9 MB 230 kB/s
+
+
+
+
+running (0m30.1s), 0000/1002 VUs, 89986 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1002 VUs  30s  3000.00 iters/s
