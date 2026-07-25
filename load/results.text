@@ -1,0 +1,36 @@
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✗ 'rate<0.01' rate=51.37%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 60001  1997.012453/s
+    checks_succeeded...: 48.62% 29177 out of 60001
+    checks_failed......: 51.37% 30824 out of 60001
+    pool timeout is 2s
+    ✗ is 302
+      ↳  48% — ✓ 29177 / ✗ 30824
+
+    HTTP
+    http_req_duration..............: min=1.24ms  med=27.23ms avg=63.59ms  p(90)=133.86ms p(95)=165.93ms p(99)=190.08ms p(99.9)=222.08ms max=231.43ms
+      { expected_response:true }...: min=44.44ms med=118.8ms avg=124.97ms p(90)=166.88ms p(95)=179.83ms p(99)=204.02ms p(99.9)=224.56ms max=231.43ms
+    http_req_failed................: 51.37% 30824 out of 60001
+    http_reqs......................: 60001  1997.012453/s
+
+    EXECUTION
+    iteration_duration.............: min=1.29ms  med=27.29ms avg=63.64ms  p(90)=133.92ms p(95)=165.97ms p(99)=190.12ms p(99.9)=222.1ms  max=231.47ms
+    iterations.....................: 60001  1997.012453/s
+    vus............................: 124    min=114            max=154 
+    vus_max........................: 1000   min=1000           max=1000
+
+    NETWORK
+    data_received..................: 11 MB  350 kB/s
+    data_sent......................: 4.6 MB 154 kB/s
+
+
+
+
+running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s
