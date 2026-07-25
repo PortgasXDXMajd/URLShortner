@@ -1,0 +1,22 @@
+services:
+  pg:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: shortener
+    volumes:
+      - ./pg/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d shortener"]
+      interval: 2s
+      retries: 20
+
+  api:
+    build: ./api
+    environment:
+      instance_id: api-1
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg:5432/shortener
+    ports: ["8080:8000"]
+    depends_on:
+      pg: {condition: service_healthy}
