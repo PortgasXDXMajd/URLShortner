@@ -1,0 +1,37 @@
+services:
+  pg:
+    image: postgres:16
+    environment: {POSTGRES_PASSWORD: pgpass, POSTGRES_DB: shortener}
+    volumes: ["./pg/init.sql:/docker-entrypoint-initdb.d/init.sql:ro"]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d shortener"]
+      interval: 2s
+      retries: 20
+
+  api1: &api
+    build: ./api
+    environment:
+      instance_id: api-1
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg:5432/shortener
+    depends_on: {pg: {condition: service_healthy}}
+  api2:
+    <<: *api
+    environment:
+      instance_id: api-2
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg:5432/shortener
+  api3:
+    <<: *api
+    environment:
+      instance_id: api-3
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg:5432/shortener
+  api4:
+    <<: *api
+    environment:
+      instance_id: api-4
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg:5432/shortener
+
+  lb:
+    image: haproxy:2.9
+    volumes: ["./haproxy/api.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+    ports: ["8080:8080","8404:8404"]
+    depends_on: [api1, api2, api3, api4]

@@ -34,3 +34,43 @@
 
 running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
 reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s
+
+
+==============================================================================================
+with 4 api servers
+
+THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 60001   1999.840749/s
+    checks_succeeded...: 100.00% 60001 out of 60001
+    checks_failed......: 0.00%   0 out of 60001
+
+    ✓ is 302
+
+    HTTP
+    http_req_duration..............: min=1.56ms med=2.5ms  avg=5.49ms p(90)=7.21ms p(95)=20.42ms p(99)=65.97ms p(99.9)=116.47ms max=147.88ms
+      { expected_response:true }...: min=1.56ms med=2.5ms  avg=5.49ms p(90)=7.21ms p(95)=20.42ms p(99)=65.97ms p(99.9)=116.47ms max=147.88ms
+    http_req_failed................: 0.00%  0 out of 60001
+    http_reqs......................: 60001  1999.840749/s
+
+    EXECUTION
+    iteration_duration.............: min=1.6ms  med=2.55ms avg=5.59ms p(90)=7.35ms p(95)=20.72ms p(99)=67.93ms p(99.9)=118.52ms max=147.93ms
+    iterations.....................: 60001  1999.840749/s
+    vus............................: 5      min=4          max=189 
+    vus_max........................: 1000   min=1000       max=1000
+
+    NETWORK
+    data_received..................: 10 MB  346 kB/s
+    data_sent......................: 4.6 MB 154 kB/s
+
+
+
+
+running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s

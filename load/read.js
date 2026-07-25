@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check } from 'k6';
 
 const BASE = __ENV.BASE || 'http://localhost:8080';
-const SLUG = 'Ansub8R';
+const SLUG = 'oH2Ei0c';
 export const options = {
     summaryTrendStats: ['min', 'med', 'avg', 'p(90)', 'p(95)', 'p(99)', 'p(99.9)', 'max'],
     scenarios: {
