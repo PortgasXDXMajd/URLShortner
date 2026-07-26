@@ -13,6 +13,7 @@ write_pool = AsyncConnectionPool(
     max_size=settings.pool_max,
     timeout=settings.pool_timeout,
     max_waiting=settings.pool_max_waiting,
+    check=AsyncConnectionPool.check_connection,
     open=False
 )
 
@@ -24,8 +25,9 @@ read_pools = [
         max_size=settings.pool_max,
         timeout=settings.pool_timeout,
         max_waiting=settings.pool_max_waiting,
+        check=AsyncConnectionPool.check_connection,
         open=False
-    ) for pg_read_replica_connection_string in settings.pg_read_replicas_connection_string
+    ) for pg_read_replica_connection_string in settings.replica_dsns
 ]
 
 async def open_connections_async():

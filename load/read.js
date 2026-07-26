@@ -2,13 +2,13 @@ import http from 'k6/http';
 import { check } from 'k6';
 
 const BASE = __ENV.BASE || 'http://localhost:8080';
-const SLUG = 'oH2Ei0c';
+const SLUG = 'sqi09Km';
 export const options = {
     summaryTrendStats: ['min', 'med', 'avg', 'p(90)', 'p(95)', 'p(99)', 'p(99.9)', 'max'],
     scenarios: {
         reads: { 
             executor: 'constant-arrival-rate',
-            rate: 4000,
+            rate: 3000,
             timeUnit: '1s',
             duration: '30s',
             preAllocatedVUs: 1000,

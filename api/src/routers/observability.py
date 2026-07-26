@@ -7,12 +7,9 @@ settings = get_setting()
 router = APIRouter(prefix="/api/observability", tags=["observability"])
 
 @router.get("/health")
-async def health(c=Depends(get_writer_async)):
-    await c.execute("SELECT 1")
-    return { 
-        "healthy": True, 
-        "instance_id": settings.instance_id
-    }
+async def health():
+    return {"healthy": True, "instance_id": settings.instance_id}
+
 
 @router.get("/whoami")
 async def whoami(c=Depends(get_writer_async)):
