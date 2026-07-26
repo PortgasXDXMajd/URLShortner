@@ -1,32 +1,33 @@
-  █ THRESHOLDS 
+2000req/s With One Instance: 
+ THRESHOLDS 
 
     http_req_failed
-    ✗ 'rate<0.01' rate=51.37%
+    ✗ 'rate<0.01' rate=61.67%
 
 
   █ TOTAL RESULTS 
 
-    checks_total.......: 60001  1997.012453/s
-    checks_succeeded...: 48.62% 29177 out of 60001
-    checks_failed......: 51.37% 30824 out of 60001
-    pool timeout is 2s
+    checks_total.......: 60001  1999.669527/s
+    checks_succeeded...: 38.32% 22996 out of 60001
+    checks_failed......: 61.67% 37005 out of 60001
+
     ✗ is 302
-      ↳  48% — ✓ 29177 / ✗ 30824
+      ↳  38% — ✓ 22996 / ✗ 37005
 
     HTTP
-    http_req_duration..............: min=1.24ms  med=27.23ms avg=63.59ms  p(90)=133.86ms p(95)=165.93ms p(99)=190.08ms p(99.9)=222.08ms max=231.43ms
-      { expected_response:true }...: min=44.44ms med=118.8ms avg=124.97ms p(90)=166.88ms p(95)=179.83ms p(99)=204.02ms p(99.9)=224.56ms max=231.43ms
-    http_req_failed................: 51.37% 30824 out of 60001
-    http_reqs......................: 60001  1997.012453/s
+    http_req_duration..............: min=164µs    med=4.7ms    avg=54.83ms  p(90)=142.87ms p(95)=158.39ms p(99)=208.4ms  p(99.9)=548.06ms max=622.25ms
+      { expected_response:true }...: min=5.12ms   med=129.44ms avg=136.12ms p(90)=163.19ms p(95)=179.66ms p(99)=291.83ms p(99.9)=580.71ms max=622.25ms
+    http_req_failed................: 61.67% 37005 out of 60001
+    http_reqs......................: 60001  1999.669527/s
 
     EXECUTION
-    iteration_duration.............: min=1.29ms  med=27.29ms avg=63.64ms  p(90)=133.92ms p(95)=165.97ms p(99)=190.12ms p(99.9)=222.1ms  max=231.47ms
-    iterations.....................: 60001  1997.012453/s
-    vus............................: 124    min=114            max=154 
+    iteration_duration.............: min=187.75µs med=4.75ms   avg=54.88ms  p(90)=142.91ms p(95)=158.44ms p(99)=208.46ms p(99.9)=550.1ms  max=622.59ms
+    iterations.....................: 60001  1999.669527/s
+    vus............................: 0      min=0              max=131 
     vus_max........................: 1000   min=1000           max=1000
 
     NETWORK
-    data_received..................: 11 MB  350 kB/s
+    data_received..................: 12 MB  382 kB/s
     data_sent......................: 4.6 MB 154 kB/s
 
 
@@ -34,12 +35,29 @@
 
 running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
 reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s
+ERRO[0030] thresholds on metrics 'http_req_failed' have been crossed 
+(MajdURLShortner) telypaylaptops@Majds-MacBook MajdURLShortner % 
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+2000req/s With 3 Instances: 
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
 
 
-==============================================================================================
-with 4 api servers
+     execution: local
+        script: load/read.js
+        output: -
 
-THRESHOLDS 
+     scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 2000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
 
     http_req_failed
     ✓ 'rate<0.01' rate=0.00%
@@ -47,22 +65,22 @@ THRESHOLDS
 
   █ TOTAL RESULTS 
 
-    checks_total.......: 60001   1999.840749/s
+    checks_total.......: 60001   1999.798357/s
     checks_succeeded...: 100.00% 60001 out of 60001
     checks_failed......: 0.00%   0 out of 60001
 
     ✓ is 302
 
     HTTP
-    http_req_duration..............: min=1.56ms med=2.5ms  avg=5.49ms p(90)=7.21ms p(95)=20.42ms p(99)=65.97ms p(99.9)=116.47ms max=147.88ms
-      { expected_response:true }...: min=1.56ms med=2.5ms  avg=5.49ms p(90)=7.21ms p(95)=20.42ms p(99)=65.97ms p(99.9)=116.47ms max=147.88ms
+    http_req_duration..............: min=1.59ms med=2.48ms avg=4.78ms p(90)=5.41ms p(95)=15.77ms p(99)=50.46ms p(99.9)=120.14ms max=136.1ms 
+      { expected_response:true }...: min=1.59ms med=2.48ms avg=4.78ms p(90)=5.41ms p(95)=15.77ms p(99)=50.46ms p(99.9)=120.14ms max=136.1ms 
     http_req_failed................: 0.00%  0 out of 60001
-    http_reqs......................: 60001  1999.840749/s
+    http_reqs......................: 60001  1999.798357/s
 
     EXECUTION
-    iteration_duration.............: min=1.6ms  med=2.55ms avg=5.59ms p(90)=7.35ms p(95)=20.72ms p(99)=67.93ms p(99.9)=118.52ms max=147.93ms
-    iterations.....................: 60001  1999.840749/s
-    vus............................: 5      min=4          max=189 
+    iteration_duration.............: min=1.64ms med=2.54ms avg=4.84ms p(90)=5.49ms p(95)=15.87ms p(99)=50.58ms p(99.9)=120.8ms  max=140.17ms
+    iterations.....................: 60001  1999.798357/s
+    vus............................: 4      min=3          max=43  
     vus_max........................: 1000   min=1000       max=1000
 
     NETWORK
@@ -75,46 +93,59 @@ THRESHOLDS
 running (0m30.0s), 0000/1000 VUs, 60001 complete and 0 interrupted iterations
 reads ✓ [======================================] 0000/1000 VUs  30s  2000.00 iters/s
 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+4000 req/s with 4 instances:
 
- scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
-              * reads: 3000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: load/read.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 4000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
 
 
 
   █ THRESHOLDS 
 
     http_req_failed
-    ✗ 'rate<0.01' rate=17.97%
+    ✗ 'rate<0.01' rate=37.69%
 
 
   █ TOTAL RESULTS 
 
-    checks_total.......: 89986  2987.916116/s
-    checks_succeeded...: 82.02% 73814 out of 89986
-    checks_failed......: 17.97% 16172 out of 89986
+    checks_total.......: 120002 3991.130924/s
+    checks_succeeded...: 62.30% 74772 out of 120002
+    checks_failed......: 37.69% 45230 out of 120002
 
     ✗ is 302
-      ↳  82% — ✓ 73814 / ✗ 16172
+      ↳  62% — ✓ 74772 / ✗ 45230
 
     HTTP
-    http_req_duration..............: min=656µs    med=24.44ms avg=77.68ms p(90)=170.82ms p(95)=286.81ms p(99)=690.52ms p(99.9)=1.06s max=1.29s
-      { expected_response:true }...: min=1.97ms   med=36.09ms avg=89.36ms p(90)=192.63ms p(95)=350.42ms p(99)=741.46ms p(99.9)=1.08s max=1.29s
-    http_req_failed................: 17.97% 16172 out of 89986
-    http_reqs......................: 89986  2987.916116/s
+    http_req_duration..............: min=156µs    med=88.06ms  avg=103.6ms  p(90)=200.83ms p(95)=285.68ms p(99)=496.91ms p(99.9)=1.71s max=2.08s
+      { expected_response:true }...: min=2.17ms   med=116.68ms avg=139ms    p(90)=231.24ms p(95)=316.43ms p(99)=820.87ms p(99.9)=1.99s max=2.08s
+    http_req_failed................: 37.69% 45230 out of 120002
+    http_reqs......................: 120002 3991.130924/s
 
     EXECUTION
-    dropped_iterations.............: 15     0.498063/s
-    iteration_duration.............: min=689.87µs med=24.51ms avg=77.81ms p(90)=171.28ms p(95)=287.55ms p(99)=690.56ms p(99.9)=1.06s max=1.29s
-    iterations.....................: 89986  2987.916116/s
-    vus............................: 296    min=19             max=910 
-    vus_max........................: 1002   min=1000           max=1002
+    iteration_duration.............: min=181.29µs med=88.11ms  avg=103.66ms p(90)=200.89ms p(95)=285.74ms p(99)=497.03ms p(99.9)=1.71s max=2.08s
+    iterations.....................: 120002 3991.130924/s
+    vus............................: 458    min=261             max=596 
+    vus_max........................: 1000   min=1000            max=1000
 
     NETWORK
-    data_received..................: 16 MB  531 kB/s
-    data_sent......................: 6.9 MB 230 kB/s
+    data_received..................: 22 MB  730 kB/s
+    data_sent......................: 9.2 MB 307 kB/s
 
 
 
 
-running (0m30.1s), 0000/1002 VUs, 89986 complete and 0 interrupted iterations
-reads ✓ [======================================] 0000/1002 VUs  30s  3000.00 iters/s
+running (0m30.1s), 0000/1000 VUs, 120002 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1000 VUs  30s  4000.00 iters/s
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

@@ -8,7 +8,7 @@ export const options = {
     scenarios: {
         reads: { 
             executor: 'constant-arrival-rate',
-            rate: 2000,
+            rate: 4000,
             timeUnit: '1s',
             duration: '30s',
             preAllocatedVUs: 1000,
