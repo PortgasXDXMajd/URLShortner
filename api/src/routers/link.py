@@ -5,6 +5,7 @@ from fastapi.responses import RedirectResponse
 
 from config import get_setting
 from helpers.url_token_generator import get_url_token
+from helpers import cache
 from helpers.db import get_reader_async, get_writer_async, read_connection, write_connection
 
 settings = get_setting()
@@ -33,16 +34,23 @@ async def get(s: str):
     if not s:
         raise HTTPException(400, "url_token is empty")
 
-    async with read_connection() as (c, role):
-        row = await (await c.execute("SELECT target_url from links WHERE url_token=%s", (s,))).fetchone()
+    target, role = await cache.get_link(s), "cache"
+    if target is None:
+        async with read_connection() as (c, role):
+            row = await (await c.execute("SELECT target_url from links WHERE url_token=%s", (s,))).fetchone()
+        if row is not None and row[0]:
+            target = row[0]
+            await cache.set_link(s, target)
 
-    if row is None or not row[0]:
+    if not target:
         raise HTTPException(404, "url_token was not found")
 
-    async with write_connection() as w:
-        await w.execute("INSERT INTO clicks (url_token) VALUES (%s)", (s,))
+    # buffer the click in redis; fall back to a direct insert if redis is down
+    if not await cache.push_click(s):
+        async with write_connection() as w:
+            await w.execute("INSERT INTO clicks (url_token) VALUES (%s)", (s,))
 
-    return RedirectResponse(row[0], status_code=302, headers={
+    return RedirectResponse(target, status_code=302, headers={
         'X-Served-By': settings.instance_id,
         'X-DB-Role': role,
     })

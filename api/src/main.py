@@ -1,4 +1,6 @@
-from helpers import db
+import asyncio
+
+from helpers import cache, db
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from psycopg_pool import PoolTimeout, TooManyRequests
@@ -8,7 +10,9 @@ from contextlib import asynccontextmanager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.open_connections_async()
+    flusher = asyncio.create_task(cache.click_flusher())
     yield
+    flusher.cancel()
 
 app = FastAPI(lifespan=lifespan)
 

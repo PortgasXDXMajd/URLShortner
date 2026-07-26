@@ -149,3 +149,159 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 running (0m30.1s), 0000/1000 VUs, 120002 complete and 0 interrupted iterations
 reads ✓ [======================================] 0000/1000 VUs  30s  4000.00 iters/s
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Without Redis and clicks to background job:
+
+     scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 4000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.06%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 118463 3936.268751/s
+    checks_succeeded...: 99.93% 118386 out of 118463
+    checks_failed......: 0.06%  77 out of 118463
+
+    ✗ is 302
+      ↳  99% — ✓ 118386 / ✗ 77
+
+    HTTP
+    http_req_duration..............: min=1.05ms med=13.73ms avg=74.8ms  p(90)=225.72ms p(95)=394.58ms p(99)=687.25ms p(99.9)=1.01s max=1.22s
+      { expected_response:true }...: min=1.05ms med=13.71ms avg=74.8ms  p(90)=225.88ms p(95)=394.7ms  p(99)=687.32ms p(99.9)=1.01s max=1.22s
+    http_req_failed................: 0.06%  77 out of 118463
+    http_reqs......................: 118463 3936.268751/s
+
+    EXECUTION
+    dropped_iterations.............: 1539   51.137635/s
+    iteration_duration.............: min=1.08ms med=13.77ms avg=74.94ms p(90)=226.53ms p(95)=394.8ms  p(99)=687.69ms p(99.9)=1.01s max=1.22s
+    iterations.....................: 118463 3936.268751/s
+    vus............................: 566    min=18           max=1704
+    vus_max........................: 1822   min=1625         max=1822
+
+    NETWORK
+    data_received..................: 23 MB  752 kB/s
+    data_sent......................: 9.1 MB 303 kB/s
+
+
+
+
+running (0m30.1s), 0000/1822 VUs, 118463 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1822 VUs  30s  4000.00 iters/s
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+with Redis and push clicks to background job
+       /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: load/read.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 4000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 120001  3999.714023/s
+    checks_succeeded...: 100.00% 120001 out of 120001
+    checks_failed......: 0.00%   0 out of 120001
+
+    ✓ is 302
+
+    HTTP
+    http_req_duration..............: min=723µs    med=1.77ms avg=4.16ms p(90)=7.21ms p(95)=14.5ms  p(99)=47.57ms p(99.9)=116.01ms max=161.86ms
+      { expected_response:true }...: min=723µs    med=1.77ms avg=4.16ms p(90)=7.21ms p(95)=14.5ms  p(99)=47.57ms p(99.9)=116.01ms max=161.86ms
+    http_req_failed................: 0.00%  0 out of 120001
+    http_reqs......................: 120001 3999.714023/s
+
+    EXECUTION
+    iteration_duration.............: min=752.33µs med=1.82ms avg=4.38ms p(90)=7.29ms p(95)=14.74ms p(99)=53.12ms p(99.9)=136.93ms max=270.24ms
+    iterations.....................: 120001 3999.714023/s
+    vus............................: 7      min=5           max=67  
+    vus_max........................: 1000   min=1000        max=1000
+
+    NETWORK
+    data_received..................: 23 MB  756 kB/s
+    data_sent......................: 9.2 MB 308 kB/s
+
+
+
+
+running (0m30.0s), 0000/1000 VUs, 120001 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1000 VUs  30s  4000.00 iters/s
+(MajdURLShortner) telypaylaptops@Majds-MacBook MajdURLShortner % 
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+6 instances with Redis (The Super Hero)
+
+        /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: load/read.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 5000 max VUs, 1m0s max duration (incl. graceful stop):
+              * reads: 6000.00 iterations/s for 30s (maxVUs: 1000-5000, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 179982  5992.491855/s
+    checks_succeeded...: 100.00% 179982 out of 179982
+    checks_failed......: 0.00%   0 out of 179982
+
+    ✓ is 302
+
+    HTTP
+    http_req_duration..............: min=603µs    med=12.94ms avg=23.53ms p(90)=52.87ms p(95)=81.96ms p(99)=176.2ms p(99.9)=256.87ms max=332.03ms
+      { expected_response:true }...: min=603µs    med=12.94ms avg=23.53ms p(90)=52.87ms p(95)=81.96ms p(99)=176.2ms p(99.9)=256.87ms max=332.03ms
+    http_req_failed................: 0.00%  0 out of 179982
+    http_reqs......................: 179982 5992.491855/s
+
+    EXECUTION
+    dropped_iterations.............: 19     0.632604/s
+    iteration_duration.............: min=628.66µs med=12.99ms avg=23.65ms p(90)=53.09ms p(95)=82.14ms p(99)=177.5ms p(99.9)=257.41ms max=332.08ms
+    iterations.....................: 179982 5992.491855/s
+    vus............................: 263    min=23          max=519 
+    vus_max........................: 1003   min=1003        max=1003
+
+    NETWORK
+    data_received..................: 34 MB  1.1 MB/s
+    data_sent......................: 14 MB  461 kB/s
+
+
+
+
+running (0m30.0s), 0000/1003 VUs, 179982 complete and 0 interrupted iterations
+reads ✓ [======================================] 0000/1003 VUs  30s  6000.00 iters/s

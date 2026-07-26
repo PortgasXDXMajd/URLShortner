@@ -1,0 +1,111 @@
+services:
+
+  api1: &api
+    build: ./api
+    environment:
+      instance_id: api-1
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2        
+      pool_max: 10              
+    depends_on:
+      pg1: {condition: service_healthy}
+      redis: {condition: service_started}
+  api2:
+    <<: *api
+    environment:
+      instance_id: api-2
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2
+      pool_max: 10
+  api3:
+    <<: *api
+    environment:
+      instance_id: api-3
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2
+      pool_max: 10
+  api4:
+    <<: *api
+    environment:
+      instance_id: api-4
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2
+      pool_max: 10
+  api5:
+    <<: *api
+    environment:
+      instance_id: api-5
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2
+      pool_max: 10
+  api6:
+    <<: *api
+    environment:
+      instance_id: api-6
+      pg_primary_connection_string: postgresql://postgres:pgpass@pg1:5432/shortener
+      pg_read_replicas_connection_string: postgresql://postgres:pgpass@pg2:5432/shortener,postgresql://postgres:pgpass@pg3:5432/shortener
+      redis_connection_string: redis://redis:6379/0
+      WEB_CONCURRENCY: 2
+      pool_max: 10
+  lb:
+    image: haproxy:2.9
+    volumes: ["./haproxy/api.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+    ports: ["8080:8080","8404:8404"]
+    depends_on: [api1, api2, api3, api4, api5, api6]
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    ports: ["6379:6379"]
+
+  pg1:                                   # primary
+    image: postgres:16
+    command: >
+      postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment: {POSTGRES_PASSWORD: pgpass, POSTGRES_DB: shortener}
+    volumes:
+      - ./pg/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./pg/10-replication-hba.sh:/docker-entrypoint-initdb.d/10-replication-hba.sh:ro
+      - ./pg/primary.conf:/etc/postgresql/postgresql.conf:ro
+      - pg1data:/var/lib/postgresql/data
+    ports: ["5432:5432"]
+    cap_add: ["NET_ADMIN"]               # needed for tc netem
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d shortener"]
+      interval: 2s
+      retries: 30
+
+  pg2: &standby
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      PRIMARY_HOST: pg1
+      SLOT_NAME: pg2
+    entrypoint: ["/usr/local/bin/standby-entrypoint.sh"]
+    command: ["postgres", "-c", "max_connections=300"]
+    volumes:
+      - ./pg/standby-entrypoint.sh:/usr/local/bin/standby-entrypoint.sh:ro
+      - pg2data:/var/lib/postgresql/data
+    cap_add: ["NET_ADMIN"]
+    depends_on: {pg1: {condition: service_healthy}}
+  pg3:
+    <<: *standby
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      PRIMARY_HOST: pg1
+      SLOT_NAME: pg3
+    volumes:
+      - ./pg/standby-entrypoint.sh:/usr/local/bin/standby-entrypoint.sh:ro
+      - pg3data:/var/lib/postgresql/data
+
+volumes: {pg1data: {}, pg2data: {}, pg3data: {}}
